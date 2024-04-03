@@ -26,6 +26,7 @@ currentPlayershand = stores players
 
 let allCards = [];
 let currentPlayershand = '';
+let currentWinner = [];
 
 function displayCards(array) {
 for (let i = 0; i < playershands.length; i++){
@@ -37,8 +38,8 @@ for (let q = 0; q < communitycards.length; q++){
     allCards.push(communitycards[q]);
     }
 
-console.log("all cards:", allCards);
-console.log("the length of best current hand is:", allCards.length);
+//console.log("all cards:", allCards);
+//console.log("the length of best current hand is:", allCards.length);
 }
 
 displayCards(playershands)
@@ -46,7 +47,7 @@ displayCards(playershands)
 //push all player cards in array
 
 //High Card algorithm////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 console.log("these are the players hands:",playershands)
 
 let winnersHand = [];
@@ -75,7 +76,7 @@ for (let j = 0; j < playershands.length; j++){
     }
     
    }
-   
+   */
 //High Card algorithm
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,25 +87,48 @@ let currentPlayer = ''
 let highestValuePair = 0;
 for (let q = 0; q < playershands.length;q++){
     currentPlayer = playershands[q];
+    //console.log(currentPlayer)
+    //checks if current players 1st caired is equal to current players second card
 if(currentPlayer[1].value === currentPlayer[2].value){
 console.log("you have pair in your hand")   
-if (currentPlayer[1].value > highestValuePair){
-    highestValuePair = currentPlayer[1].value
-    console.log("the highest kicker is", highestValuePair)
+//if scanned pair number is the highest value so far it will be assigned to the highestvalue pair variable
+if (currentPlayer[1].value >= highestValuePair){
+    highestValuePair = currentPlayer[2].value
+    currentWinner.push(playershands[q]);  
+    console.log("the highest kicker pair combo so far is", highestValuePair)
+    console.log("and the current winner so far is", currentPlayer)
 }
 }
-
-for (let i = 0; i < currentPlayer.length; i++){
-    for (let j = 0; j < communityCards.length; j++){
-    if(currentPlayer[i].value === communityCards[j].value){
-    console.log(currentPlayer[i], "is equal too", communityCards[j], "so you have a pair")
-    if (communityCards[j].value > highestValuePair){
-        highestValuePair = communityCards[j].value
-        console.log("the highest kicker is", highestValuePair)
+//checks if current players cards can be paired with the community cards
+for (let i = 1; i < currentPlayer.length; i++){ //scans the players  own cards
+    //console.log(currentPlayer)
+    for (let j = 0; j < communitycards.length; j++){//scans the community cards
+        //console.log(communitycards)
+    if(currentPlayer[i].value === communitycards[j].value){ //check if the current card in players hand matches wtih community cad
+    //if the current card in players hand is equal to community cards it will display you have pair with community card
+        console.log(currentPlayer[i], "is equal too", communitycards[j], "so you have a pair")
+    //if the pair value is higher than previous  highest then assign that one as the newest highest
+        if (communitycards[j].value >= highestValuePair){
+        highestValuePair = communitycards[j].value
+        currentWinner.push(playershands[q]);  
+        console.log("the highest kicker pair combo so far is", highestValuePair)
+        console.log("and the current winner so far is", currentPlayer)
     }
  }
 }
 }
 //tie breaker
+FinalPairWinner = []
+var currentWinnerHand = 0;
+currentWinnerPlayer = '';
+for(let w = 0; w < currentWinner.length; w++){
+    currentWinnerPlayer = currentWinner[w];
+    if(currentWinnerPlayer[1].value+currentWinnerPlayer[2].value > currentWinnerHand){
+        currentWinnerHand = currentWinnerPlayer[1].value+currentWinnerPlayer[2].value
+       
+    }
+    FinalPairWinner.push(currentWinnerPlayer)
+}
+console.log("the best pair hand is", currentWinnerPlayer)
 }
 //Pair algorithm
